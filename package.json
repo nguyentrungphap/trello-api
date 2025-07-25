@@ -1,10 +1,36 @@
 {
   "name": "trello-api",
   "version": "1.0.0",
+  "description": "A simple Trello-like API server using Express",
+  "main": "src/server.js",
   "type": "module",
-  "main": "src/sever.js",
+  "scripts": {
+    "lint": "eslint src --ext js --report-unused-disable-directives --max-warnings 0",
+    "clean": "rm -rf build && mkdir build",
+    "build-babel": "babel ./src -d ./build/src",
+    "build": "npm run clean && npm run build-babel",
+    "production": "npm run build && node ./build/src/server.js",
+    "dev": "nodemon --exec babel-node ./src/server.js"
+  },
+  "author": "Your Name",
   "license": "MIT",
+  "_moduleAliases": {
+    "~": "src"
+  },
   "dependencies": {
-    "express": "^5.1.0"
+    "@babel/runtime": "^7.28.2",
+    "express": "^5.1.0",
+    "module-alias": "^2.2.3"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.28.0",
+    "@babel/core": "^7.28.0",
+    "@babel/eslint-parser": "^7.28.0",
+    "@babel/node": "^7.28.0",
+    "@babel/plugin-transform-runtime": "^7.28.0",
+    "@babel/preset-env": "^7.28.0",
+    "babel-plugin-module-resolver": "^5.0.2",
+    "eslint": "^9.31.0",
+    "nodemon": "^3.1.10"
   }
 }

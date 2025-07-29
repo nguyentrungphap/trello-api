@@ -9,9 +9,5 @@ Router.get("/status", (req, res) => {
 });
 
 Router.use("/boards", boardRouters);
-Router.use("/card", boardRouters);
-Router.use("/column", boardRouters);
-Router.use("/invitation", boardRouters);
-Router.use("/user", boardRouters);
 
 export const API_sV1 = Router;

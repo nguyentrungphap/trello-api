@@ -14,17 +14,17 @@ export default [
         allowImportExportEverywhere: true
       },
       globals: {
-        // Nếu cần khai báo biến toàn cục, thêm vào đây
+      'no-console': 0,
+
       }
     },
     linterOptions: {
-      // Nếu bạn muốn bỏ qua một số file: ignorePatterns: ['dist/**']
     },
     rules: {
-      'no-console': 1,
+      'no-console': 0,
+      'no-unused-vars': 'warn',
       'no-extra-boolean-cast': 0,
       'no-lonely-if': 1,
-      'no-unused-vars': 1,
       'no-trailing-spaces': 1,
       'no-multi-spaces': 1,
       'no-multiple-empty-lines': 1,

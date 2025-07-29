@@ -1,21 +1,23 @@
-// eslint-disable-next-line no-undef
 module.exports = {
-  env: { es2020: true, node: true },
+  env: {
+    es2020: true,
+    node: true
+  },
   extends: ['eslint:recommended'],
   parser: '@babel/eslint-parser',
   parserOptions: {
     ecmaVersion: 'latest',
-    sourceType: 'module',
+    sourceType: 'script',
     requireConfigFile: false,
     allowImportExportEverywhere: true
   },
   plugins: [],
   rules: {
-    // Common
-    'no-console': 1,
+    'no-undef': 0,
+    'no-console': 0,
+    'no-unused-vars': 'warn',
     'no-extra-boolean-cast': 0,
     'no-lonely-if': 1,
-    'no-unused-vars': 1,
     'no-trailing-spaces': 1,
     'no-multi-spaces': 1,
     'no-multiple-empty-lines': 1,

@@ -1,29 +1,43 @@
-/* eslint-disable no-console */
-import express from 'express'
-import { mapOrder } from './utils/sorts.js'
+import express from "express";
+import { CONNECT_DB, GET_DB, CLOSE_DB } from "./config/mongodb.js";
+import exitHook from "async-exit-hook";
+import { env } from "./config/environment.js";
 
-const app = express()
+const START_SERVER = () => {
+  const app = express();
 
-const hostname = 'localhost'
-const port = 8017
+  app.get("/", async (req, res) => {
+    try {
+      const collections = await GET_DB().listCollections().toArray();
+      console.log(collections);
+      res.send("<h1>Hello World!</h1><hr>");
+    } catch (err) {
+      console.error("Error fetching collections:", err);
+      res.status(500).send("Internal Server Error");
+    }
+  });
 
-app.get('/', (req, res) => {
-  // eslint-disable-next-line no-undef
-  console.log(mapOrder(
-    [
-      { id: 'id-1', name: 'One' },
-      { id: 'id-2', name: 'Two' },
-      { id: 'id-3', name: 'Three' },
-      { id: 'id-4', name: 'Four' },
-      { id: 'id-5', name: 'Five' }
-    ],
-    ['id-5', 'id-4', 'id-2', 'id-3', 'id-1'], 'id'
-  )
-  )
-  res.end('<h1>Hello World!</h1><hr>')
-})
+  app.listen(env.APP_PORT, env.APP_HOST, () => {
+    console.log(
+      `Hello Phap dep trai, I am running at http://${env.APP_HOST}:${env.APP_PORT}/`
+    );
+  });
 
-app.listen(port, hostname, () => {
-  // eslint-disable-next-line no-undef
-  console.log(`Hello Phap dep trai, I am running at  http://${hostname}:${port}/`)
-})
+  exitHook(async () => {
+    console.log("Disconnecting from MongoDB.........");
+    await CLOSE_DB();
+    console.log("Disconnected from MongoDB.........");
+  });
+};
+
+(async () => {
+  try {
+    console.log("Connecting to MongoDB...");
+    await CONNECT_DB();
+    console.log("Connected to MongoDB");
+    START_SERVER();
+  } catch (error) {
+    console.error("Failed to connect to MongoDB:", error);
+    process.exit(1);
+  }
+})();

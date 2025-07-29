@@ -12,15 +12,20 @@
     "production": "npm run build && node ./build/src/server.js",
     "dev": "nodemon --exec babel-node ./src/server.js"
   },
-  "author": "Your Name",
+  "author": "Trung Phap",
   "license": "MIT",
   "_moduleAliases": {
     "~": "src"
   },
   "dependencies": {
     "@babel/runtime": "^7.28.2",
+    "async-exit-hook": "^2.0.1",
+    "dotenv": "^17.2.1",
+    "env": "^0.0.2",
+    "exit-hook": "^4.0.0",
     "express": "^5.1.0",
-    "module-alias": "^2.2.3"
+    "module-alias": "^2.2.3",
+    "mongodb": "^6.18.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.28.0",

@@ -1,21 +1,13 @@
 import express from "express";
-import { CONNECT_DB, GET_DB, CLOSE_DB } from "./config/mongodb.js";
+import { CONNECT_DB, GET_DB, CLOSE_DB } from "./config/mongodb";
 import exitHook from "async-exit-hook";
-import { env } from "./config/environment.js";
+import { env } from "./config/environment";
+import { API_sV1 } from "./routers/V1";
 
 const START_SERVER = () => {
   const app = express();
 
-  app.get("/", async (req, res) => {
-    try {
-      const collections = await GET_DB().listCollections().toArray();
-      console.log(collections);
-      res.send("<h1>Hello World!</h1><hr>");
-    } catch (err) {
-      console.error("Error fetching collections:", err);
-      res.status(500).send("Internal Server Error");
-    }
-  });
+  app.use("/v1", API_sV1);
 
   app.listen(env.APP_PORT, env.APP_HOST, () => {
     console.log(
@@ -26,7 +18,7 @@ const START_SERVER = () => {
   exitHook(async () => {
     console.log("Disconnecting from MongoDB.........");
     await CLOSE_DB();
-    console.log("Disconnected from MongoDB.........");
+    console.log("Disconnected from MongoDB");
   });
 };
 

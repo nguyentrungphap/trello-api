@@ -7,6 +7,9 @@ import { API_sV1 } from "./routers/V1";
 const START_SERVER = () => {
   const app = express();
 
+  //Enable req.body json data
+  app.use(express.json());
+
   app.use("/v1", API_sV1);
 
   app.listen(env.APP_PORT, env.APP_HOST, () => {

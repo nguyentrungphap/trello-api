@@ -3,6 +3,7 @@ import { CONNECT_DB, GET_DB, CLOSE_DB } from "./config/mongodb";
 import exitHook from "async-exit-hook";
 import { env } from "./config/environment";
 import { API_sV1 } from "./routers/V1";
+import { errorHandlingMiddleware } from "./middlewares/errorHandlingMiddleware";
 
 const START_SERVER = () => {
   const app = express();
@@ -11,6 +12,9 @@ const START_SERVER = () => {
   app.use(express.json());
 
   app.use("/v1", API_sV1);
+
+  //Middleware xu ly loi tap trung
+  app.use(errorHandlingMiddleware);
 
   app.listen(env.APP_PORT, env.APP_HOST, () => {
     console.log(

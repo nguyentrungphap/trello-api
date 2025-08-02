@@ -1,15 +1,15 @@
 import { StatusCodes } from "http-status-codes";
 import ApiError from "../utils/ApiError";
+import { boardService } from "../services/boardService";
 
 const createNew = async (req, res, next) => {
   try {
-    console.log(req.body);
-    res.status(200).json({ message: "ok" });
+    const createBoard = await boardService.createNew(req.body);
+    res.status(200).json({ createBoard });
   } catch (error) {
     console.log(error);
-    const messageError = ApiError(StatusCodes.INTERNAL_SERVER_ERROR, error);
-    next(messageError);
-  }
+    next(error);
+  } 
 };
 
 export const boardControllers = {
